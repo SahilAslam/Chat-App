@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import {
+  AbsoluteCenter,
+  Box,
   Button,
+  Divider,
   FormControl,
   FormLabel,
   Input,
@@ -8,8 +11,8 @@ import {
   InputRightElement,
   VStack,
 } from "@chakra-ui/react";
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +25,7 @@ const Login = () => {
 
   return (
     <VStack>
-      <FormControl id="email" isRequired>
+      <FormControl id="login-email" isRequired>
         <FormLabel>Email</FormLabel>
         <Input
           placeholder="enter your email"
@@ -30,7 +33,7 @@ const Login = () => {
         />
       </FormControl>
 
-      <FormControl id="password" isRequired>
+      <FormControl id="login-password" isRequired>
         <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
@@ -38,10 +41,12 @@ const Login = () => {
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
-              {show ? <FaEyeSlash /> : <FaEye />}
-            </Button>
+          <InputRightElement width="2.5rem">
+            {show ? (
+              <ViewOffIcon color="gray.700" onClick={() => setShow(!show)} />
+            ) : (
+              <ViewIcon color="gray.700" onClick={() => setShow(!show)} />
+            )}
           </InputRightElement>
         </InputGroup>
       </FormControl>
@@ -55,11 +60,18 @@ const Login = () => {
         Log In
       </Button>
 
+      <Box position="relative" padding="7" width="100%">
+        <Divider />
+        <AbsoluteCenter bg="white" color="gray" px="4">
+          or
+        </AbsoluteCenter>
+      </Box>
+
       <Button
         variant="outline"
-        colorScheme="blue"
+        colorScheme="orange"
         width="100%"
-        style={{ marginTop: 15 }}
+        style={{}}
         onClick={guestHandler}
       >
         Login as Guest
