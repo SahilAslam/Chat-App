@@ -17,7 +17,6 @@ const userSchema = mongoose.Schema({
   },
   profilePic: {
     type: "String",
-    required: true,
     default:
       "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
   },
@@ -34,7 +33,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 
 userSchema.pre("save", async function (next) {
     if (!this.isModified) {
-        next();
+      next();
     }
 
     const salt = await bcrypt.genSalt(10);

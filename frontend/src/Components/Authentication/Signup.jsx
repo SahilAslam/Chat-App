@@ -9,6 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useToast } from "@chakra-ui/react";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -17,8 +18,32 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false)
 
-  const postDetails = async (pics) => {};
+  const toast = useToast();
+
+  const postDetails = async (pics) => {
+    setLoading(true)
+    if(pics === undefined) {
+      toast({
+        title: "Account created.",
+        description: "We've created your account for you.",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+
+    if(pics.type === "image/jpeg" || pics.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", "chat-app");
+      data.append("cloud_name", "dpxdmwzeo");
+      fetch("https://api.cloudinary.com/v1_1/dpxdmwzeo/image/upload");
+    }
+  };
 
   const submitHandler = () => {};
 
