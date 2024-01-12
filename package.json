@@ -5,8 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js"
+    "start": "nodemon backend/server.js",
+    "server": "node backend/server.js"
   },
   "author": "Sahil Aslam",
   "license": "ISC",
