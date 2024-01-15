@@ -7,6 +7,7 @@ import connectDB from "./connection/db.js";
 import colors from "colors";
 import userRouter from "./routes/userRoutes.js"
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
+import chatRouter from "./routes/chatRoutes.js"
 
 
 const port = process.env.PORT || 4000
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', userRouter);
+app.use('/api/chat', chatRouter)
 
 app.use(notFound);
 app.use(errorHandler);
