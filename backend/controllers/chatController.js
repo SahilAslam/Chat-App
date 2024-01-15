@@ -4,7 +4,6 @@ import User from "../models/userModel.js";
 
 export const accessChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
-  
 
   if (!userId) {
     console.log("UserId not found");
@@ -37,7 +36,7 @@ export const accessChat = asyncHandler(async (req, res) => {
 
     try {
       const createdChat = await Chat.create(chatData);
-      console.log(createdChat)
+      console.log(createdChat);
       const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
         "users",
         "-password"
@@ -47,5 +46,30 @@ export const accessChat = asyncHandler(async (req, res) => {
       res.status(400);
       throw new Error(error.message);
     }
+  }
+});
+
+export const fetchChat = asyncHandler(async (req, res) => {
+  try {
+    let chat = await Chat.find({
+      users: { $elemMatch: { $eq: req.user._id } },
+    })
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password")
+      .populate("latestMessage")
+      .sort({ updateAt: -1 });
+      
+    if (chat) {
+      chat = await User.populate(chat, {
+        path: "latestMessage.sender",
+        select: "name profilePic email",
+      });
+      res.status(200).json(chat);
+    } else {
+      throw new Error("coudn't find chat");
+    }
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
   }
 });
