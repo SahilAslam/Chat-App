@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const ChatContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState();
   const [user, setUser] = useState();
