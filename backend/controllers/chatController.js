@@ -140,26 +140,57 @@ export const addToGroup = asyncHandler(async (req, res) => {
   if (chat.users.includes(userId)) {
     res.status(400);
     throw new Error("User is already a member");
-  };
+  }
 
   const addedToGroup = await Chat.findByIdAndUpdate(
     chatId,
     {
       $push: { users: userId },
     },
-    { 
+    {
       new: true,
     }
   )
     .populate("users", "-password")
     .populate("groupAdmin", "-password");
 
-    if (!addedToGroup) {
-      res.status(400);
-      throw new Error("Chat not found!");
-    } else {
-      res.status(200).json(addedToGroup);
-    }
+  if (!addedToGroup) {
+    res.status(400);
+    throw new Error("Chat not found!");
+  } else {
+    res.status(200).json({message: "Added User Successfully", addedToGroup});
+  }
 });
 
+export const removeFromGroup = asyncHandler(async (req, res) => {
+  const { chatId, userId } = req.body;
 
+  const chat = await Chat.findById(chatId);
+
+  if (!chat.groupAdmin.equals(req.user._id)) {
+    res.status(400);
+    throw new Error("User is not the group admin!");
+  }
+
+  if (!chat.users.includes(userId)) {
+    res.status(400);
+    throw new Error("User is not a member");
+  }
+
+  const removedFromGroup = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      $pull: { users: userId },
+    },
+    { new: true }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!removedFromGroup) {
+    res.status(404);
+    throw new Error("Chat Not Found");
+  } else {
+    res.status(200).json({message: "Removed User Successfully", removedFromGroup});
+  }
+});
