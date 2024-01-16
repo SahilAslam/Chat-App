@@ -130,6 +130,18 @@ export const renameGroup = asyncHandler(async (req, res) => {
 export const addToGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
 
+  const chat = await Chat.findById(chatId);
+
+  if (!chat.groupAdmin.equals(req.user._id)) {
+    res.status(400);
+    throw new Error("User is not the group admin!");
+  }
+
+  if (chat.users.includes(userId)) {
+    res.status(400);
+    throw new Error("User is already a member");
+  };
+
   const addedToGroup = await Chat.findByIdAndUpdate(
     chatId,
     {
@@ -149,3 +161,5 @@ export const addToGroup = asyncHandler(async (req, res) => {
       res.status(200).json(addedToGroup);
     }
 });
+
+
