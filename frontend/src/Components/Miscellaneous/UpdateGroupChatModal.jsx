@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -18,6 +19,7 @@ import {
 import { useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import UserBadgeItem from "../UserAvatar/UserBadgeItem";
+import axiosInstance from "../../Axios/AxiosInstance";
 
 const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,7 +33,47 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat, setSelectedChat, user } = ChatState();
 
   const handleRemove = () => {};
-  const handleRename = () => {};
+
+  const handleRename = async () => {
+    if (!groupChatName) return;
+
+    try {
+      setRenameLoading(true);
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axiosInstance.put(
+        `/api/chat/group/rename`,
+        {
+          chatId: selectedChat._id,
+          chatName: groupChatName,
+        },
+        config
+      );
+
+      setSelectedChat(data);
+      setFetchAgain(!fetchAgain);
+      setRenameLoading(false);
+      
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: error.response.data.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+      setRenameLoading(false);
+    }
+
+    setGroupChatName("");
+  };
+
   const handleSearch = () => {};
 
   return (
