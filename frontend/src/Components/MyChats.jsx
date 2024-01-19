@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
@@ -7,7 +8,7 @@ import ChatLoading from "./ChatLoading";
 import { getSender } from "../Config/ChatLogics";
 import GroupChatModal from "./Miscellaneous/GroupChatModal";
 
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
@@ -39,7 +40,7 @@ const MyChats = () => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChat();
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <Box

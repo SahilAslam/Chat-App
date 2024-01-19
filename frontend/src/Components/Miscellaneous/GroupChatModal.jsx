@@ -148,7 +148,7 @@ const GroupChatModal = ({ children }) => {
       <span onClick={onOpen}>{children}</span>
 
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+        <ModalOverlay bg="white.300" backdropFilter="blur(8px)" />
         <ModalContent>
           <ModalHeader
             fontSize="35px"
@@ -174,7 +174,7 @@ const GroupChatModal = ({ children }) => {
                 onChange={(e) => handleSearch(e.target.value)}
               />
             </FormControl>
-            <Box w="100%" display="flex" flexWrap="wrap" >
+            <Box w="100%" display="flex" flexWrap="wrap">
               {selectedUsers.map((user) => (
                 <UserBadgeItem
                   key={user._id}
