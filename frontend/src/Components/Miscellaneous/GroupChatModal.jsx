@@ -15,7 +15,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import axiosInstance from "../../Axios/AxiosInstance";
 import UserListItem from "../UserAvatar/UserListItem";
