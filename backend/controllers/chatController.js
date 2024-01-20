@@ -130,17 +130,17 @@ export const renameGroup = asyncHandler(async (req, res) => {
 export const addToGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
 
-  // const chat = await Chat.findById(chatId);
+  const chat = await Chat.findById(chatId);
 
-  // if (!chat.groupAdmin.equals(req.user._id)) {
-  //   res.status(400);
-  //   throw new Error("User is not the group admin!");
-  // }
+  if (!chat.groupAdmin.equals(req.user._id)) {
+    res.status(400);
+    throw new Error("User is not the group admin!");
+  }
 
-  // if (chat.users.includes(userId)) {
-  //   res.status(400);
-  //   throw new Error("User is already a member");
-  // }
+  if (chat.users.includes(userId)) {
+    res.status(400);
+    throw new Error("User is already a member");
+  }
 
   const addedToGroup = await Chat.findByIdAndUpdate(
     chatId,
@@ -153,29 +153,29 @@ export const addToGroup = asyncHandler(async (req, res) => {
   )
     .populate("users", "-password")
     .populate("groupAdmin", "-password");
-
+    console.log(addedToGroup)
   if (!addedToGroup) {
     res.status(400);
     throw new Error("Chat not found!");
   } else {
-    res.json(addToGroup)
+    res.json(addedToGroup)
   }
 });
 
 export const removeFromGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
 
-  // const chat = await Chat.findById(chatId);
+  const chat = await Chat.findById(chatId);
 
-  // if (!chat.groupAdmin.equals(req.user._id)) {
-  //   res.status(400);
-  //   throw new Error("User is not the group admin!");
-  // }
+  if (!chat.groupAdmin.equals(req.user._id)) {
+    res.status(400);
+    throw new Error("User is not the group admin!");
+  }
 
-  // if (!chat.users.includes(userId)) {
-  //   res.status(400);
-  //   throw new Error("User is not a member");
-  // }
+  if (!chat.users.includes(userId)) {
+    res.status(400);
+    throw new Error("User is not a member");
+  }
 
   const removedFromGroup = await Chat.findByIdAndUpdate(
     chatId,
@@ -191,6 +191,6 @@ export const removeFromGroup = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Chat Not Found");
   } else {
-    res.json(removeFromGroup)
+    res.json(removedFromGroup)
   }
 });
