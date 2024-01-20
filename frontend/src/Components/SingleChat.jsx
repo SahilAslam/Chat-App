@@ -1,13 +1,58 @@
 /* eslint-disable react/prop-types */
 import { ChatState } from "../Context/ChatProvider";
-import { Box, IconButton, Text } from "@chakra-ui/react";
+import { Box, FormControl, IconButton, Input, Spinner, Text, useToast } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { getSender, getSenderFull } from "../Config/ChatLogics";
 import ProfileModal from "./Miscellaneous/ProfileModal";
 import UpdateGroupChatModal from "./Miscellaneous/UpdateGroupChatModal";
+import { useState } from "react";
+import { sendMessage } from "../../../backend/controllers/messageControllers";
+import axiosInstance from "../Axios/AxiosInstance";
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [newMessage, setNewMessage] = useState("");
+
+  const toast = useToast();
+
   const { user, selectedChat, setSelectedChat } = ChatState();
+
+  const sendMessage = async (event) => {
+    if (event.key === "Enter" && newMessage) {
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        setNewMessage("");
+
+        const { data } = await axiosInstance.post("/api/message", {
+          content: newMessage,
+          chatId: selectedChat,
+        }, config);
+
+        console.log(data)
+        setMessages([...messages, data]);
+      } catch (error) {
+        toast({
+          title: "Error Occured!",
+          description: "Failed to send the Message",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top-right",
+        });
+      }
+    }
+  }
+
+  const typingHandler = (e) => {
+    setNewMessage(e.target.value);
+
+  }
 
   return (
     <>
@@ -53,7 +98,28 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             h="100%"
             borderRadius="lg"
             overflowY="hidden"
-          ></Box>
+          >
+            {loading ? (
+              <Spinner
+                w={12}
+                h={12}
+                alignSelf="center"
+                margin="auto"
+              />
+            ) : (
+              <div></div>
+            )}
+
+            <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+              <Input 
+                variant="filled"
+                bg="#F5F5F5"
+                placeholder="Enter a message.."
+                onChange={typingHandler}
+                value={newMessage}
+              />
+            </FormControl>
+          </Box>
         </>
       ) : (
         <Box
