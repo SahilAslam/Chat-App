@@ -15,7 +15,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import axiosInstance from "../../Axios/AxiosInstance";
 import UserListItem from "../UserAvatar/UserListItem";
@@ -116,12 +116,18 @@ const GroupChatModal = ({ children }) => {
         },
       };
 
-      const { data } = await axiosInstance.post('/api/chat/group', {
-        name: groupChatName,
-        users: JSON.stringify(searchResult.map((u) => u._id)),
-      }, config);
+      const { data } = await axiosInstance.post(
+        "/api/chat/group",
+        {
+          name: groupChatName,
+          users: JSON.stringify(selectedUsers.map((u) => u._id)),
+        },
+        config
+      );
 
       setChats([data, ...chats]);
+      setSearchResult([]);
+      setSelectedUsers([]);
       onClose();
       toast({
         title: "Group Created",
