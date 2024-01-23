@@ -11,7 +11,9 @@ import './styles.css'
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client"
 
-const ENDPOINT = "http://localhost:4000";
+const BASE_URL = import.meta.env.VITE_BASE_URL || "";
+
+const ENDPOINT = BASE_URL;
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -19,6 +21,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   const toast = useToast();
 

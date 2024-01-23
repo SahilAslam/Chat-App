@@ -51,6 +51,8 @@ io.on("connection", (socket) => {
     console.log("user joined room: " + room);
   });
 
+  
+
   socket.on("new message", (newMessageRecieved) => {
     var chat = newMessageRecieved.chat;
 
