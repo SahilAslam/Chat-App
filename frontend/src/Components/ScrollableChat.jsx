@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+
 import ScrollableFeed from "react-scrollable-feed";
 import { isLastMessage, isSameSender, isSameSenderMargin, isSameUser } from "../Config/ChatLogics";
 import { ChatState } from "../Context/ChatProvider";
