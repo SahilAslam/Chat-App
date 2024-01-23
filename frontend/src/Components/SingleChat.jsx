@@ -5,9 +5,10 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import { getSender, getSenderFull } from "../Config/ChatLogics";
 import ProfileModal from "./Miscellaneous/ProfileModal";
 import UpdateGroupChatModal from "./Miscellaneous/UpdateGroupChatModal";
-import { useState } from "react";
-import { sendMessage } from "../../../backend/controllers/messageControllers";
+import { useEffect, useState } from "react";
 import axiosInstance from "../Axios/AxiosInstance";
+import './styles.css'
+import ScrollableChat from "./ScrollableChat";
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
@@ -17,6 +18,36 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const toast = useToast();
 
   const { user, selectedChat, setSelectedChat } = ChatState();
+
+  const fetchMessages = async () => {
+    if (!selectedChat) return;
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      setLoading(true);
+      const { data } = await axiosInstance.get(`/api/message/${selectedChat._id}`, config);
+      setMessages(data);
+      console.log(data )
+      setLoading(false);
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Messages",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+  }
+
+  useEffect(() => {
+    fetchMessages();
+  }, [selectedChat])
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
@@ -84,6 +115,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <UpdateGroupChatModal
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
+                  fetchMessages={fetchMessages}
                 />
               </>
             )}
@@ -100,18 +132,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             overflowY="hidden"
           >
             {loading ? (
-              <Spinner
-                w={12}
-                h={12}
-                alignSelf="center"
-                margin="auto"
-              />
+              <Spinner w={12} h={12} alignSelf="center" margin="auto" />
             ) : (
-              <div></div>
+              <div className="messages"> 
+                <ScrollableChat messages={messages} />
+              </div>
             )}
 
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
-              <Input 
+              <Input
                 variant="filled"
                 bg="#F5F5F5"
                 placeholder="Enter a message.."
