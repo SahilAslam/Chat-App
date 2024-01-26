@@ -15,9 +15,11 @@ const EditProfileModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen} colorScheme="blue" px={6}>Edit</Button>
+      <Button onClick={onOpen} colorScheme="blue" px={6}>
+        Edit
+      </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose}  isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Modal Title</ModalHeader>

@@ -14,9 +14,8 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import EditProfileModal from "./EditProfileModal";
 
-const ProfileModal = ({ user, loggedUser, children }) => {
+const ProfileModal = ({ user, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   
   return (
@@ -35,7 +34,7 @@ const ProfileModal = ({ user, loggedUser, children }) => {
       )}
       <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay backdropFilter="blur(3px)" />
-        <ModalContent h="410px">
+        <ModalContent h="auto">
           <ModalHeader
             fontSize="40px"
             fontFamily="Work sans"
@@ -60,17 +59,13 @@ const ProfileModal = ({ user, loggedUser, children }) => {
             <Text
               fontSize={{ base: "28px", md: "30px" }}
               fontFamily="Work sans"
+              mt={5}
             >
               Email: {user.email}
             </Text>
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>
-            {user._id === loggedUser && (
-              <Button colorScheme="blue" ml={2} px={0} onClick={onClose}>
-                <EditProfileModal />           
-              </Button>
-            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
