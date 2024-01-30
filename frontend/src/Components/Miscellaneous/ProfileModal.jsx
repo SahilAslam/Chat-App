@@ -17,7 +17,7 @@ import {
 
 const ProfileModal = ({ user, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+
   return (
     <>
       {children ? (
@@ -33,7 +33,7 @@ const ProfileModal = ({ user, children }) => {
         </IconButton>
       )}
       <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered>
-        <ModalOverlay backdropFilter="blur(3px)" />
+        <ModalOverlay backdropFilter="blur(5px)" />
         <ModalContent h="auto">
           <ModalHeader
             fontSize="40px"
@@ -65,7 +65,9 @@ const ProfileModal = ({ user, children }) => {
             </Text>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <Button onClick={onClose} ml={2}>
+              Close
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

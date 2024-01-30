@@ -65,3 +65,26 @@ export const allUsers = asyncHandler(async (req, res) => {
 
     return res.send(users)
 });
+
+export const editUser = asyncHandler(async (req, res) => {
+    const {userId, name, email, profilePic, token} = req.body;
+
+    const user = await User.findByIdAndUpdate(userId, {
+        name: name,
+        email: email,
+        profilePic: profilePic,
+    })
+    console.log(user)
+    if (user) {
+      res.status(201).json({
+        _id: user?._id,
+        name: user?.name,
+        email: user?.email,
+        profilePic: user?.profilePic,
+        token: token,
+      });
+    } else {
+      res.status(400);
+      throw new Error("Failed to create the user");
+    }
+})

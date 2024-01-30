@@ -154,7 +154,7 @@ const GroupChatModal = ({ children }) => {
       <span onClick={onOpen}>{children}</span>
 
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay bg="white.300" backdropFilter="blur(8px)" />
+        <ModalOverlay backdropFilter="blur(5px)" />
         <ModalContent>
           <ModalHeader
             fontSize="35px"

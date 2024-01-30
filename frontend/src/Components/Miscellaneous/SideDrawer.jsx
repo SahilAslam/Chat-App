@@ -30,13 +30,9 @@ import ChatLoading from "../ChatLoading";
 import UserListItem from "../UserAvatar/UserListItem";
 import { getSender } from "../../Config/ChatLogics";
 import NotificationBadge, { Effect } from "react-notification-badge";
+import EditProfileModal from "./EditProfileModal";
 
 const SideDrawer = () => {
-  const [search, setSearch] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingChat, setLoadingChat] = useState(false);
-
   const {
     user,
     setSelectedChat,
@@ -45,6 +41,11 @@ const SideDrawer = () => {
     notification,
     setNotification,
   } = ChatState();
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loadingChat, setLoadingChat] = useState(false);
+  const [profilePic, setProfilePic] = useState(user.profilePic);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -107,7 +108,11 @@ const SideDrawer = () => {
         },
       };
 
-      const { data } = await axiosInstance.post("/api/chat", { userId }, config );
+      const { data } = await axiosInstance.post(
+        "/api/chat",
+        { userId },
+        config
+      );
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
 
@@ -124,7 +129,7 @@ const SideDrawer = () => {
         position: "top-right",
       });
     }
-  }
+  };
 
   return (
     <>
@@ -179,20 +184,60 @@ const SideDrawer = () => {
             </MenuList>
           </Menu>
           <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} backgroundColor="white">
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              backgroundColor="white"
+            >
               <Avatar
                 size="sm"
                 cursor="pointer"
                 name={user.name}
-                src={user.profilePic}
+                src={profilePic}
               />
             </MenuButton>
             <MenuList>
               <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>
+                <MenuItem
+                  _hover={{
+                    textDecoration: "underline",
+                    textUnderlineOffset: "1.5px",
+                    fontWeight: "bold",
+                    backgroundColor: "white",
+                    fontFamily: "Lato",
+                  }}
+                >
+                  My Profile
+                </MenuItem>
               </ProfileModal>
               <MenuDivider />
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+              <EditProfileModal user={user} setPic={setProfilePic}>
+                <MenuItem
+                  _hover={{
+                    textDecoration: "underline",
+                    textUnderlineOffset: "1.5px",
+                    fontWeight: "bold",
+                    backgroundColor: "white",
+                    fontFamily: "Lato",
+                  }}
+                >
+                  Edit Profile
+                </MenuItem>
+              </EditProfileModal>
+              <MenuDivider />
+              <MenuItem
+                color="red"
+                _hover={{
+                  textDecoration: "underline",
+                  textUnderlineOffset: "1.5px",
+                  fontWeight: "bold",
+                  backgroundColor: "white",
+                  fontFamily: "Lato",
+                }}
+                onClick={logoutHandler}
+              >
+                Logout
+              </MenuItem>
             </MenuList>
           </Menu>
         </div>
