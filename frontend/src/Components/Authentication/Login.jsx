@@ -23,8 +23,8 @@ const Login = () => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false)
 
-  const guestEmail = import.meta.env.VITE_GUESTUSER_EMAIL;
-  const guestPassword = import.meta.env.VITE_GUESTUSER_PASSWORD;
+  // const guestEmail = import.meta.env.VITE_GUESTUSER_EMAIL;
+  // const guestPassword = import.meta.env.VITE_GUESTUSER_PASSWORD;
 
   const toast = useToast();
 
@@ -82,10 +82,10 @@ const Login = () => {
   };
   
 
-  const guestHandler = () => {
-    setEmail(guestEmail);
-    setPassword(guestPassword);
-  };
+  // const guestHandler = () => {
+  //   setEmail(guestEmail);
+  //   setPassword(guestPassword);
+  // };
 
   return (
     <VStack>
@@ -127,7 +127,7 @@ const Login = () => {
         Log In
       </Button>
 
-      <Box position="relative" padding="7" width="100%">
+      {/* <Box position="relative" padding="7" width="100%">
         <Divider />
         <AbsoluteCenter bg="white" color="gray" px="4">
           or
@@ -142,7 +142,7 @@ const Login = () => {
         onClick={guestHandler}
       >
         Login as Guest
-      </Button>
+      </Button> */}
     </VStack>
   );
 }
