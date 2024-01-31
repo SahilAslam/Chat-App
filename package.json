@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "nodemon backend/server.js",
-    "server": "node backend/server.js"
+    "server": "node backend/server.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Sahil Aslam",
   "license": "ISC",
