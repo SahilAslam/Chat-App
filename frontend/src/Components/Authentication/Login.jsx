@@ -50,7 +50,7 @@ const Login = () => {
           "content-type": "application/json",
         },
       };
-      
+      console.log("entered...............")
       const { data }  = await axiosInstance.post("/api/user/login", {
         email,
         password,
@@ -71,7 +71,7 @@ const Login = () => {
     } catch (error) {
       toast({
         title: "Error Occured",
-        description: "Login Failed",
+        description: error?.response?.data?.message,
         status: "error",
         duration: 5000,
         isClosable: true,
