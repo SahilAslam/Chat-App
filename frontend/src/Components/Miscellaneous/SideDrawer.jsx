@@ -151,7 +151,7 @@ const SideDrawer = () => {
           </Button>
         </Tooltip>
 
-        <Text fontSize="2xl" fontFamily="Lato">
+        <Text fontSize="2xl" fontFamily="Lato" color="#ff6f61">
           GoChat
         </Text>
 
@@ -186,8 +186,8 @@ const SideDrawer = () => {
           <Menu>
             <MenuButton
               as={Button}
-              rightIcon={<ChevronDownIcon />}
-              backgroundColor="white"
+              rightIcon={<ChevronDownIcon color="black" />}
+              colorScheme="custom"
             >
               <Avatar
                 size="sm"

@@ -214,6 +214,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         display={{ base: "flex" }}
         icon={<ViewIcon />}
         onClick={onOpen}
+        
       />
 
       <Modal isOpen={isOpen} onClose={onClose}>

@@ -50,7 +50,6 @@ const Login = () => {
           "content-type": "application/json",
         },
       };
-      console.log("entered...............")
       const { data }  = await axiosInstance.post("/api/user/login", {
         email,
         password,

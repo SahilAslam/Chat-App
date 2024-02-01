@@ -185,7 +185,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             {!selectedChat.isGroupChat ? (
               <>
                 {getSender(user, selectedChat.users)}
-                <ProfileModal user={getSenderFull(user, selectedChat.users)} loggedUser={user._id} />
+                <ProfileModal user={getSenderFull(user, selectedChat.users)} />
               </>
             ) : (
               <>
@@ -203,14 +203,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg="#E8E8E8"
+            backgroundImage="chat.jpg"
+            backgroundSize="cover"
             w="100%"
             h="100%"
             borderRadius="lg"
             overflowY="hidden"
           >
             {loading ? (
-              <Spinner w={12} h={12} alignSelf="center" margin="auto" />
+              <Spinner w={12} h={12} alignSelf="center" color="white" margin="auto" />
             ) : (
               <div className="messages">
                 <ScrollableChat messages={messages} />
