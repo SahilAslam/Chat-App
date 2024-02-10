@@ -8,6 +8,7 @@ import ChatLoading from "./ChatLoading";
 import { getSender } from "../Config/ChatLogics";
 import GroupChatModal from "./Miscellaneous/GroupChatModal";
 
+
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
@@ -90,13 +91,17 @@ const MyChats = ({ fetchAgain }) => {
                 key={chat._id}
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#ff6f61" : "#E8E8E8"}
-                color={selectedChat === chat ? "white" : "black"}
+                borderRadius="lg"
+                style={{
+                  background:
+                    selectedChat === chat
+                      ? "linear-gradient(to right, #FF5F6D, #FFC371)"
+                      : "#E8E8E8",
+                }}
                 px={3}
                 py={2}
-                borderRadius="lg"
               >
-                <Text>
+                <Text color={selectedChat === chat ? "white" : "black"}>
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}

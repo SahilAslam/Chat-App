@@ -151,7 +151,12 @@ const SideDrawer = () => {
           </Button>
         </Tooltip>
 
-        <Text fontSize="2xl" fontFamily="Lato" color="#ff6f61">
+        <Text
+          fontSize="2xl"
+          fontFamily="Lato"
+          bgGradient="linear(to-r, #D4145A, #FBB03B)"
+          bgClip="text"
+        >
           GoChat
         </Text>
 
