@@ -70,6 +70,7 @@ const Login = () => {
       navigate('/chats')
 
     } catch (error) {
+      console.log(error, "ddddddddd")
       toast({
         title: "Error Occured",
         description: error?.response?.data?.message,
