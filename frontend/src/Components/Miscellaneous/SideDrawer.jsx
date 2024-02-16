@@ -141,6 +141,7 @@ const SideDrawer = () => {
         w="100%"
         p="5px 10px 5px 10px"
         borderWidth="5px"
+        borderColor="#C2E9FB"
       >
         <Tooltip hasArrow label="Search users" bg="gray.300" color="black">
           <Button variant="ghost" onClick={onOpen}>

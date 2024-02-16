@@ -203,7 +203,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            backgroundImage="chat.jpg"
+            backgroundImage="bg.jpg"
             backgroundSize="cover"
             w="100%"
             h="100%"
