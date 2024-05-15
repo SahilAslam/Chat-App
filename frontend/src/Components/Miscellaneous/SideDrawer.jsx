@@ -40,7 +40,7 @@ const SideDrawer = () => {
     setChats,
     notification,
     setNotification,
-  } = ChatState();
+  } = ChatState();  
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
